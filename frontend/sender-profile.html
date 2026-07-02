@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sender Profile</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/senderdashboard.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="navbar-left">
+
+            <div class="navbar-logo">
+                <!--<img src="icons/truck.svg" alt="CargoFlow">-->
+            </div>
+
+            <h2>CargoFlow <span>· Sender</span></h2>
+
+        </div>
+
+        <div class="navbar-right">
+
+            <button class="logout-action-btn" id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- Profile -->
+    <main class="container">
+
+        <div class="profile-wrap">
+
+            <div class="back-link">
+                <a href="sender-dashboard.html">← Back to Dashboard</a>
+            </div>
+
+            <p id="profileMsg"></p>
+
+            <section class="profile-card card">
+
+                <div class="profile-top">
+
+                    <div class="profile-identity">
+
+                        <div class="profile-avatar" id="avatarInitial">S</div>
+
+                        <div>
+                            <h1 id="profileName">Loading...</h1>
+                            <p id="profileEmail"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="profile-buttons">
+
+                        <button class="edit-btn" id="editBtn">Edit Profile</button>
+
+                        <button class="cancel-btn" id="cancelBtn" style="display:none;">Cancel</button>
+                        <button class="save-btn" id="saveBtn" style="display:none;">Save Changes</button>
+
+                    </div>
+
+                </div>
+
+                <form id="profileForm">
+
+                    <div class="form-group" style="margin-bottom:18px;">
+                        <label for="fullName">Full Name <span>*</span></label>
+                        <input type="text" id="fullName" name="fullName" readonly>
+                    </div>
+
+                    <div class="form-row" style="margin-bottom:18px;">
+
+                        <div class="form-group">
+                            <label for="phone">Phone <span>*</span></label>
+                            <input type="tel" id="phone" name="phone" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" readonly>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:18px;">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" readonly>
+                    </div>
+
+                    <div class="form-row" style="margin-bottom:18px;">
+
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="street">Street</label>
+                            <input type="text" id="street" name="street" readonly>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="alley">Alley</label>
+                            <input type="text" id="alley" name="alley" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="houseNumber">House Number</label>
+                            <input type="text" id="houseNumber" name="houseNumber" readonly>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <script src="js/sender-profile.js"></script>
+</body>
+</html>

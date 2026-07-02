@@ -56,6 +56,30 @@
     width:20px;
 }
 
+.profile-btn{
+    width:36px;
+    height:36px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:none;
+    border:none;
+    color:var(--text-secondary);
+    cursor:pointer;
+    border-radius:999px;
+    transition:var(--transition);
+}
+
+.profile-btn svg{
+    width:20px;
+    height:20px;
+}
+
+.profile-btn:hover{
+    background:var(--background);
+    color:var(--primary);
+}
+
 
 /* =========================
    Dashboard

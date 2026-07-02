@@ -1,0 +1,174 @@
+/* =========================
+   Profile Page Layout
+========================= */
+
+.profile-wrap{
+    width:55%;
+    margin:20px auto;
+}
+
+.back-link{
+    margin-bottom:20px;
+}
+
+.back-link a{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.back-link a:hover{
+    color:var(--primary);
+}
+
+/* =========================
+   Profile Card Header
+========================= */
+
+.profile-card{
+    padding:28px;
+    margin-bottom:24px;
+}
+
+.profile-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:26px;
+}
+
+.profile-identity{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.profile-avatar{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    background:var(--primary);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    font-weight:var(--fw-bold);
+    flex-shrink:0;
+}
+
+.profile-identity h1{
+    font-size:var(--fs-heading);
+    color:var(--text-primary);
+    margin-bottom:4px;
+}
+
+.profile-identity p{
+    color:var(--text-secondary);
+    font-size:var(--fs-small);
+}
+
+.profile-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.edit-btn,
+.save-btn,
+.cancel-btn,
+.logout-action-btn{
+    height:42px;
+    padding:0 18px;
+    border-radius:var(--radius-sm);
+    font-size:var(--fs-small);
+    font-weight:var(--fw-medium);
+    cursor:pointer;
+    transition:var(--transition);
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-primary);
+}
+
+.edit-btn:hover,
+.cancel-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.save-btn{
+    background:var(--primary);
+    color:#fff;
+    border:none;
+}
+
+.save-btn:hover{
+    background:var(--primary-hover);
+}
+
+.logout-action-btn{
+    border-color:var(--border);
+    color:var(--primary);
+}
+
+.logout-action-btn:hover{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+}
+
+/* =========================
+   Read-only vs Edit inputs
+========================= */
+
+.form-group input:disabled,
+.form-group input[readonly],
+.form-group select:disabled{
+    background:var(--background);
+    color:var(--text-secondary);
+    cursor:default;
+}
+
+/* =========================
+   Messages
+========================= */
+
+#profileMsg{
+    margin-bottom:16px;
+    font-size:var(--fs-small);
+    display:none;
+}
+
+#profileMsg.success{
+    color:#1a7f37;
+    display:block;
+}
+
+#profileMsg.error{
+    color:var(--primary);
+    display:block;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width:768px){
+
+    .profile-wrap{
+        width:100%;
+        padding:0 16px;
+    }
+
+    .profile-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:16px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+}
