@@ -1,0 +1,40 @@
+:root{
+
+    /* Colors */
+    --primary:#FF0B45;
+    --primary-hover:#E6003D;
+
+    --background:#FFF5F5;
+    --surface:#FFFFFF;
+
+    --text-primary:#26142F;
+    --text-secondary:#8B7680;
+
+    --border:#F0C8D0;
+    --border-light:#F2D4D9;
+
+    /* Typography */
+    --font-family:"Poppins",sans-serif;
+
+    --fs-display:58px;   /* CargoFlow */
+    --fs-title:42px;     /* Welcome Back / Create Account */
+    --fs-heading:22px;
+    --fs-body:16px;
+    --fs-label:15px;
+    --fs-small:14px;
+
+    --fw-regular:400;
+    --fw-medium:500;
+    --fw-bold:700;
+
+    /* Radius */
+    --radius-sm:10px;
+    --radius-md:14px;
+    --radius-lg:18px;
+
+    /* Shadow */
+    --shadow-card:0 5px 15px rgba(0,0,0,.04);
+
+    /* Transition */
+    --transition:.3s;
+}

@@ -1,0 +1,311 @@
+/* =========================
+   Navbar
+========================= */
+
+.navbar{
+    height:64px;
+    padding:0 24px;
+    background:var(--surface);
+    border-bottom:1px solid var(--border-light);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.navbar-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.navbar-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.navbar-logo img{
+    width:22px;
+    height:22px;
+}
+
+.navbar-left h2{
+    font-size:24px;
+    font-weight:var(--fw-bold);
+    color:var(--text-primary);
+}
+
+.navbar-left span{
+    font-weight:var(--fw-medium);
+    color:var(--text-primary);
+}
+
+.logout-btn{
+    width:36px;
+    height:36px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:none;
+    border:none;
+    cursor:pointer;
+}
+
+.logout-btn img{
+    width:20px;
+}
+
+
+/* =========================
+   Dashboard
+========================= */
+
+.dashboard{
+    width: 55%;
+    margin:20px auto;
+}
+
+
+/* =========================
+   Header
+========================= */
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:22px;
+}
+
+.dashboard-header h1{
+    font-size:var(--fs-title);
+    color:var(--text-primary);
+    font-weight:var(--fw-bold);
+    margin-bottom:4px;
+}
+
+.dashboard-header p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+}
+
+.new-request-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    height:42px;
+    padding:0 18px;
+
+    background:var(--primary);
+    color:#fff;
+
+    border:none;
+    border-radius:var(--radius-sm);
+
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.new-request-btn:hover{
+    background:var(--primary-hover);
+}
+
+.new-request-btn img{
+    width:16px;
+}
+
+/* ==========================
+   Vehicle Card
+========================== */
+
+.vehicle-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:40px 24px;
+    margin-bottom:24px;
+}
+
+.vehicle-card img{
+    width:48px;
+    height:48px;
+    opacity:.25;
+    margin-bottom:16px;
+}
+
+.vehicle-card h3{
+    font-size:22px;
+    font-weight:var(--fw-semibold);
+    color:var(--text-primary);
+    margin-bottom:8px;
+}
+
+.vehicle-card p{
+    color:var(--text-secondary);
+    margin-bottom:20px;
+}
+
+.add-vehicle-btn{
+    width:140px;
+    height:42px;
+}
+
+/* ==========================
+   Stats
+========================== */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    margin-bottom:28px;
+}
+
+/* ==========================
+   Trips Section
+========================== */
+
+.recent-requests{
+    margin-top:10px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.section-header h2{
+    font-size:26px;
+    font-weight:var(--fw-bold);
+    color:var(--text-primary);
+}
+
+.section-header a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:var(--fs-small);
+    transition:var(--transition);
+}
+
+.section-header a:hover{
+    color:var(--primary-hover);
+}
+
+/* ==========================
+   Empty Card
+========================== */
+
+.empty-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    min-height:180px;
+
+    background:var(--surface);
+    border:1px solid var(--border-light);
+    border-radius:var(--radius-lg);
+}
+
+.empty-card img{
+    width:52px;
+    opacity:.25;
+    margin-bottom:16px;
+}
+
+.empty-card p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width:768px){
+
+    .dashboard{
+        width:100%;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+}
+
+/* ==========================
+   Vehicle Card - Filled State
+========================== */
+
+.vehicle-card.filled{
+    align-items:stretch;
+    text-align:left;
+    padding:24px;
+}
+
+.vehicle-card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:16px;
+}
+
+.vehicle-card-header h3{
+    margin-bottom:0;
+    font-size:20px;
+}
+
+.vehicle-type-badge{
+    background:var(--background);
+    color:var(--primary);
+    font-size:var(--fs-small);
+    font-weight:var(--fw-semibold);
+    padding:4px 12px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    text-transform:capitalize;
+}
+
+.vehicle-detail-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px 20px;
+    width:100%;
+}
+
+.vehicle-detail{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.vehicle-detail-label{
+    font-size:var(--fs-small);
+    color:var(--text-secondary);
+}
+
+.vehicle-detail-value{
+    font-size:var(--fs-body);
+    font-weight:var(--fw-medium);
+    color:var(--text-primary);
+}
+
+.vehicle-detail-value.yes{
+    color:var(--primary);
+}

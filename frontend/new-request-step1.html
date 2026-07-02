@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Shipment Request</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/new-request.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="request-form">
+
+        <h1 class="page-title">New Shipment Request</h1>
+
+        <div class="progress-bar">
+            <div class="progress active"></div>
+            <div class="progress"></div>
+        </div>
+
+        <div class="section-title">
+
+            <!--<img src="icons/package.svg">-->
+
+            <h2>Cargo Details</h2>
+
+        </div>
+
+        <form id="step1Form">
+
+            <div class="form-group">
+
+                <label>Weight (kg) <span>*</span></label>
+
+                <input
+                    type="number"
+                    placeholder="Enter weight"
+                    id="weight"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Cargo Type <span>*</span></label>
+
+                <select id="cargoType">
+
+                    <option value="food">Food</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="construction_material">Construction Material</option>
+
+                </select>
+
+            </div>
+
+            <div class="switch-card">
+
+                <span>Refrigerator Required</span>
+
+                <label class="switch">
+
+                    <input type="checkbox" id="refrigeratorRequired">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+            <p id="errorMsg" style="color:red; display:none;"></p>
+
+            <button class="btn-primary" type="submit">
+
+                Continue to Delivery Details
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<script src="js/new-request-step1.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vehicle</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/add-vehicle.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="navbar-left">
+
+            <div class="navbar-logo">
+                <!--<img src="icons/truck.svg" alt="CargoFlow">-->
+            </div>
+
+            <h2>CargoFlow <span>· Driver</span></h2>
+
+        </div>
+
+        <div class="navbar-right">
+
+            <button class="logout-btn">
+                <!--<img src="icons/logout.svg" alt="Logout">-->
+            </button>
+
+        </div>
+
+    </header>
+    <!-- Main -->
+    <main class="container">
+
+        <section class="vehicle-form card">
+
+            <div class="section-title">
+
+                <!--<img src="icons/truck.svg" alt="Vehicle">-->
+
+                <h2>Add Vehicle</h2>
+
+            </div>
+
+            <form id="addVehicleForm">
+
+                <div class="form-group">
+
+                    <label>
+                        Vehicle Type <span>*</span>
+                    </label>
+
+                    <select id="vehicleType">
+
+                        <option value="truck">Truck</option>
+                        <option value="khavar">khavar</option>
+                        <option value="pickup">Pickup</option>
+                        <option value="trailer">Trailer</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Plate Number <span>*</span>
+                    </label>
+
+                    <input type="text" id="plateNumber">
+
+                </div>
+
+                <div class="form-row three-column">
+
+                    <div class="form-group">
+
+                        <label>Length (m)</label>
+
+                        <input type="number" id="length">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Width (m)</label>
+
+                        <input type="number" id="width">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Height (m)</label>
+
+                        <input type="number" id="height">
+
+                    </div>
+
+                </div>
+
+                <div class="switch-card">
+
+                    <span>Has Refrigerator</span>
+
+                    <label class="switch">
+
+                        <input type="checkbox" id="refrigerator">
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Depreciation (%)</label>
+                    <input type="number" id="depreciation">
+                </div>
+
+                <p id="errorMsg" style="color:red; display:none;"></p>
+
+                <button type="submit" class="btn-primary">
+                    <span class="btn-icon">+</span>
+                    Add Vehicle
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+    <script src="js/add-vehicle.js"></script>
+</body>
+
+</html>

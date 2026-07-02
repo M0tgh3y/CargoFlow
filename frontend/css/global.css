@@ -1,0 +1,42 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:var(--font-family);
+    background:var(--background);
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+    border:none;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
+
+input,
+textarea,
+select{
+    font-family:inherit;
+    outline:none;
+}
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}

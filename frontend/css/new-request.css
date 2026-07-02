@@ -1,0 +1,205 @@
+/* ==========================
+   Container
+========================== */
+
+.request-form{
+    width:40%;
+    margin:0 auto;
+}
+
+/* ==========================
+   Progress
+========================== */
+
+.progress-bar{
+    display:flex;
+    gap:8px;
+    margin:18px 0 24px;
+}
+
+.progress{
+    flex:1;
+    height:5px;
+    background:var(--border-light);
+    border-radius:999px;
+}
+
+.progress.active{
+    background:var(--primary);
+}
+
+/* ==========================
+   Section Header
+========================== */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+}
+
+.section-title img{
+    width:22px;
+    height:22px;
+}
+
+.section-title h2{
+    font-size:24px;
+    font-weight:var(--fw-bold);
+    color:var(--text-primary);
+}
+
+/* ==========================
+   Form
+========================== */
+
+.request-form form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+/* ==========================
+   Switch Card
+========================== */
+
+.switch-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    height:48px;
+
+    padding:0 16px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-sm);
+}
+
+.switch-card span{
+    color:var(--text-primary);
+    font-size:var(--fs-body);
+}
+
+/* ==========================
+   Toggle Switch
+========================== */
+
+.switch{
+    position:relative;
+    display:inline-block;
+    width:34px;
+    height:20px;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+
+    background:#F3D8DE;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.slider::before{
+    content:"";
+
+    position:absolute;
+
+    width:16px;
+    height:16px;
+
+    left:2px;
+    top:2px;
+
+    background:white;
+
+    border-radius:50%;
+
+    transition:.3s;
+}
+
+.switch input:checked + .slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .slider::before{
+    transform:translateX(14px);
+}
+
+/* ==========================
+   Price Card
+========================== */
+
+.price-card{
+    text-align:center;
+
+    padding:18px;
+
+    background:#FFF0F3;
+
+    border:1px solid #FFC5D2;
+
+    border-radius:var(--radius-md);
+}
+
+.price-card p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+    margin-bottom:6px;
+}
+
+.price-card h2{
+    color:var(--primary);
+    font-size:42px;
+    font-weight:var(--fw-bold);
+}
+
+/* ==========================
+   Bottom Buttons
+========================== */
+
+.action-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.action-buttons .btn-outline,
+.action-buttons .btn-primary{
+    width:100%;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media(max-width:480px){
+
+    .request-form{
+        width:100%;
+    }
+
+    .action-buttons{
+        grid-template-columns:1fr;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+}

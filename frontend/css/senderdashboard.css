@@ -1,0 +1,248 @@
+/* =========================
+   Navbar
+========================= */
+
+.navbar{
+    height:64px;
+    padding:0 24px;
+    background:var(--surface);
+    border-bottom:1px solid var(--border-light);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.navbar-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.navbar-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.navbar-logo img{
+    width:22px;
+    height:22px;
+}
+
+.navbar-left h2{
+    font-size:24px;
+    font-weight:var(--fw-bold);
+    color:var(--text-primary);
+}
+
+.navbar-left span{
+    font-weight:var(--fw-medium);
+    color:var(--text-primary);
+}
+
+.logout-btn{
+    width:36px;
+    height:36px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:none;
+    border:none;
+    cursor:pointer;
+}
+
+.logout-btn img{
+    width:20px;
+}
+
+
+/* =========================
+   Dashboard
+========================= */
+
+.dashboard{
+    width: 55%;
+    margin:20px auto;
+}
+
+
+/* =========================
+   Header
+========================= */
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:22px;
+}
+
+.dashboard-header h1{
+    font-size:var(--fs-title);
+    color:var(--text-primary);
+    font-weight:var(--fw-bold);
+    margin-bottom:4px;
+}
+
+.dashboard-header p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+}
+
+.new-request-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    height:42px;
+    padding:0 18px;
+
+    background:var(--primary);
+    color:#fff;
+
+    border:none;
+    border-radius:var(--radius-sm);
+
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.new-request-btn:hover{
+    background:var(--primary-hover);
+}
+
+.new-request-btn img{
+    width:16px;
+}
+
+
+/* =========================
+   Statistics
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+
+    margin-bottom:28px;
+}
+
+.stat-card{
+    background:var(--surface);
+    border:1px solid var(--border-light);
+    border-radius:var(--radius-lg);
+
+    padding:18px;
+}
+
+.stat-card h2{
+    color:var(--primary);
+    font-size:42px;
+    font-weight:var(--fw-bold);
+    margin-bottom:8px;
+}
+
+.stat-card p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+}
+
+
+/* =========================
+   Requests
+========================= */
+
+.recent-requests h2{
+    font-size:30px;
+    color:var(--text-primary);
+    font-weight:var(--fw-bold);
+
+    margin-bottom:16px;
+}
+
+.empty-card{
+    background:var(--surface);
+    border:1px solid var(--border-light);
+    border-radius:var(--radius-lg);
+
+    height:250px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.empty-card img{
+    width:48px;
+    margin-bottom:14px;
+    opacity:.35;
+}
+
+.empty-card p{
+    color:var(--text-secondary);
+    font-size:var(--fs-body);
+
+    margin-bottom:18px;
+}
+
+.create-btn{
+    padding:10px 18px;
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-sm);
+
+    color:var(--text-primary);
+
+    cursor:pointer;
+
+    transition:var(--transition);
+}
+
+.create-btn:hover{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+}
+
+.request-item{
+    background:var(--surface);
+    border:1px solid var(--border-light);
+    border-radius:var(--radius-md);
+    padding:16px 20px;
+    margin-bottom:12px;
+}
+
+.request-item-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.request-id{
+    font-weight:var(--fw-bold);
+    color:var(--text-primary);
+}
+
+.request-status{
+    font-size:var(--fs-small);
+    font-weight:var(--fw-medium);
+    padding:4px 12px;
+    border-radius:999px;
+    text-transform:capitalize;
+    background:var(--background);
+    color:var(--primary);
+    border:1px solid var(--border);
+}
+
+.request-item p{
+    color:var(--text-secondary);
+    font-size:var(--fs-small);
+    margin:4px 0;
+}

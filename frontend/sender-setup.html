@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sender Setup</title>
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/sendersetup.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sender-profile">
+
+        <!-- Back -->
+        <div class="back-link">
+            <a href="choose-your-role.html">
+                ← Back
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="profile-header">
+
+            <div class="logo-box">
+                <!--<img src="package-icon.png" alt="Sender">-->
+            </div>
+
+            <div class="header-text">
+                <h1>Sender Profile</h1>
+                <p>Set up your sender account</p>
+            </div>
+
+        </div>
+
+        <!-- Form -->
+        <form id="senderSetupForm">
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullname">
+                    Full Name <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="fullname"
+                    name="fullname">
+            </div>
+
+            <!-- Phone & Username -->
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="phone">
+                        Phone <span>*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">
+                        Username <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username">
+                </div>
+
+            </div>
+
+            <!-- City & Street -->
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city">
+                </div>
+
+                <div class="form-group">
+                    <label for="street">
+                        Street
+                    </label>
+
+                    <input
+                        type="text"
+                        id="street"
+                        name="street">
+                </div>
+
+            </div>
+
+            <!-- Alley & House Number -->
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="alley">
+                        Alley
+                    </label>
+
+                    <input
+                        type="text"
+                        id="alley"
+                        name="alley">
+                </div>
+
+                <div class="form-group">
+                    <label for="house-number">
+                        House Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="house-number"
+                        name="house-number">
+                </div>
+
+            </div>
+
+            <p id="errorMsg" style="color:red; display:none;"></p>
+
+            <button type="submit" class="submit-btn">
+                Create Sender Account
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="js/sender-setup.js"></script>
+</body>
+</html>

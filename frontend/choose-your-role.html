@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Role</title>
+    <link rel="stylesheet" href="css/chooseyourrole.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="role-selection">
+
+        <!-- Logo -->
+        <div class="logo-box">
+            <!--<img src="truck-icon.png" alt="CargoFlow">-->
+        </div>
+
+        <!-- Heading -->
+        <h1>Choose Your Role</h1>
+
+        <p class="subtitle">
+            How will you use CargoFlow?
+        </p>
+
+        <!-- Role Form -->
+        <form id="roleForm">
+
+            <!-- Sender -->
+            <label class="role-card">
+
+                <input
+                    type="radio"
+                    name="role"
+                    value="sender"
+                    checked>
+
+                <div class="role-icon">
+                    <!--<img src="package-icon.png" alt="Sender">-->
+                </div>
+
+                <div class="role-info">
+                    <h2>Sender</h2>
+                    <p>Ship your cargo with trusted drivers</p>
+                </div>
+
+            </label>
+
+            <!-- Driver -->
+            <label class="role-card">
+
+                <input
+                    type="radio"
+                    name="role"
+                    value="driver">
+
+                <div class="role-icon">
+                    <!--<img src="truck-icon.png" alt="Driver">-->
+                </div>
+
+                <div class="role-info">
+                    <h2>Driver</h2>
+                    <p>Transport cargo and earn money</p>
+                </div>
+
+            </label>
+
+            <button type="submit">
+                Continue
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+document.getElementById("roleForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const selectedRole = document.querySelector('input[name="role"]:checked').value;
+
+    localStorage.setItem("role", selectedRole);
+
+    if (selectedRole === "sender") {
+        window.location.href = "sender-setup.html";
+    } else if (selectedRole === "driver") {
+        window.location.href = "driver-setup.html";
+    }
+});
+</script>
+
+</body>
+</html>

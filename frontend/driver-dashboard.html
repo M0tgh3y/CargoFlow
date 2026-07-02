@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/driver-dashboard.css">
+</head>
+<script src="js/driver-dashboard.js"></script>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="navbar-left">
+
+            <div class="navbar-logo">
+                <!--<img src="icons/truck.svg" alt="CargoFlow">-->
+            </div>
+
+            <h2>CargoFlow <span>· Driver</span></h2>
+
+        </div>
+
+        <div class="navbar-right">
+
+            <button class="logout-btn">
+                <!--<img src="icons/logout.svg" alt="Logout">-->
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- Dashboard -->
+    <main class="container">
+
+        <section class="dashboard">
+
+            <!-- Header -->
+            <div class="dashboard-header">
+
+                <div>
+
+                    <h1 id="welcomeName">Hello,</h1>
+                    <p id="userCity">Isfahan</p>
+
+                </div>
+
+            </div>
+
+            <!-- Vehicle Card -->
+            <div class="vehicle-card card" id="vehicleCard">
+
+                <!--<img src="icons/truck.svg" alt="Truck">-->
+
+                <h3>No Vehicle Registered</h3>
+
+                <p>Add your vehicle to start receiving requests</p>
+
+                <button class="btn-primary add-vehicle-btn">
+                    <a href="add-vehicle.html" style="color: white;">
+                        Add Vehicle
+                    </a>
+                </button>
+
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <h2>0</h2>
+
+                    <p>Active Trips</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2>0</h2>
+
+                    <p>Completed</p>
+
+                </div>
+
+            </div>
+
+            <!-- Trips -->
+            <section class="recent-requests">
+
+                <div class="section-header">
+
+                    <h2>My Trips</h2>
+
+                    <a href="available-requests.html">
+                        Browse Requests →
+                    </a>
+
+                </div>
+
+                <div class="empty-card">
+
+                    <!--<img src="icons/package.svg" alt="Package">-->
+
+                    <p>No trips yet</p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
