@@ -52,6 +52,7 @@ class Request {
                 delivery_datetime,
 
                 status,
+                delivery_code,
 
                 receiver_name,
                 receiver_phone,
@@ -116,7 +117,7 @@ static async getByDriverId(driverId) {
           ST_AsText(r.origin_location) AS origin,
           ST_AsText(r.destination_location) AS destination,
           r.distance_km, r.estimated_time, r.loading_datetime, r.delivery_datetime,
-          r.status, r.receiver_name, r.receiver_phone, r.price,
+          r.status, r.delivery_code, r.receiver_name, r.receiver_phone, r.price,
           c.cargo_type, c.weight, c.refrigerator_required, c.status AS cargo_status,
           s.full_name AS sender_name, s.phone AS sender_phone, s.city AS sender_city,
           d.full_name AS driver_name, d.phone AS driver_phone, d.status AS driver_status,
@@ -273,6 +274,36 @@ static async getByDriverId(driverId) {
 
     return result;
   }
+
+  static async setDeliveryCode(requestId, code) {
+    const [result] = await db.execute(
+      `UPDATE request SET delivery_code = ? WHERE request_id = ?`,
+      [code, requestId],
+    );
+    return result;
+  }
+
+  static async updateBasicInfo(id, data) {
+    const { receiver_name, receiver_phone, loading_datetime, delivery_datetime } = data;
+    const [result] = await db.execute(
+      `
+        UPDATE request
+        SET receiver_name = ?, receiver_phone = ?, loading_datetime = ?, delivery_datetime = ?
+        WHERE request_id = ?
+        `,
+      [receiver_name, receiver_phone, loading_datetime, delivery_datetime, id],
+    );
+    return result;
+  }
+
+  static async delete(id) {
+    const [result] = await db.execute(
+      `DELETE FROM request WHERE request_id = ?`,
+      [id],
+    );
+    return result;
+  }
 }
+
 
 module.exports = Request;

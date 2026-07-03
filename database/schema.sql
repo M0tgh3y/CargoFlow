@@ -221,6 +221,8 @@ CREATE TABLE request (
         'cancelled'
     ) DEFAULT 'pending',
 
+    delivery_code VARCHAR(10) NULL,
+
     FOREIGN KEY(sender_id)
         REFERENCES sender(sender_id),
 

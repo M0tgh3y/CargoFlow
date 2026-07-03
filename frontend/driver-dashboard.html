@@ -75,7 +75,7 @@
 
                 <div class="stat-card">
 
-                    <h2>0</h2>
+                    <h2 id="activeCount">0</h2>
 
                     <p>Active Trips</p>
 
@@ -83,7 +83,7 @@
 
                 <div class="stat-card">
 
-                    <h2>0</h2>
+                    <h2 id="completedCount">0</h2>
 
                     <p>Completed</p>
 
@@ -104,7 +104,7 @@
 
                 </div>
 
-                <div class="empty-card">
+                <div class="empty-card" id="requestsContainer">
 
                     <!--<img src="icons/package.svg" alt="Package">-->
 
@@ -117,6 +117,19 @@
         </section>
 
     </main>
+
+    <div id="actionModal" class="modal-overlay" style="display:none;">
+      <div class="modal-box">
+        <h3 id="modalTitle"></h3>
+        <p id="modalText"></p>
+        <input type="text" id="deliveryCodeInput" placeholder="Enter delivery code" style="display:none;">
+        <p id="modalError" style="color:red; display:none;"></p>
+        <div class="modal-actions">
+          <button id="modalConfirmBtn" class="btn-primary">Confirm</button>
+          <button id="modalCancelBtn" class="btn-outline">Cancel</button>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>

@@ -24,4 +24,10 @@ router.put("/:id/start", requestController.startTrip);
 
 router.put("/:id/deliver", requestController.deliverTrip);
 
+router.post("/preview-price", requestController.previewPrice);
+
+router.put("/:id", requestController.updateRequest);
+
+router.delete("/:id", requestController.deleteRequest);
+
 module.exports = router;

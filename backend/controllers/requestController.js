@@ -92,11 +92,9 @@ exports.createRequest = async (req, res) => {
       rule.company_percent,
     );
 
-    const deliveryDatetime = TimeService.calculateDeliveryDate(
-      req.body.loading_datetime,
-
-      estimatedTime,
-    );
+    const deliveryDatetime = req.body.delivery_datetime
+      ? req.body.delivery_datetime
+      : TimeService.calculateDeliveryDate(req.body.loading_datetime, estimatedTime);
 
     const result = await Request.create({
       ...req.body,
@@ -146,12 +144,15 @@ exports.acceptRequest = async (req, res) => {
       return res.status(400).json({ message: "Request is not pending" });
     }
 
+    const deliveryCode = Math.floor(1000 + Math.random() * 9000).toString();
+
     await Request.assignDriver(requestId, driver_id);
     await Request.updateStatus(requestId, "accepted");
+    await Request.setDeliveryCode(requestId, deliveryCode);
     await Driver.updateStatus(driver_id, "loading");
     await Cargo.updateStatus(request.cargo_id, "loading");
 
-    res.json({ message: "Request accepted successfully" });
+    res.json({ message: "Request accepted successfully", delivery_code: deliveryCode });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -197,6 +198,7 @@ exports.startTrip = async (req, res) => {
 exports.deliverTrip = async (req, res) => {
   try {
     const requestId = req.params.id;
+    const { delivery_code } = req.body;
 
     const request = await Request.getById(requestId);
 
@@ -212,13 +214,14 @@ exports.deliverTrip = async (req, res) => {
       });
     }
 
-    // 1. update request
+    if (!delivery_code || String(delivery_code) !== String(request.delivery_code)) {
+      return res.status(400).json({
+        message: "Incorrect delivery code",
+      });
+    }
+
     await Request.updateStatus(requestId, "delivered");
-
-    // 2. free driver
     await Driver.updateStatus(request.driver_id, "available");
-
-    // 3. finalize cargo
     await Cargo.updateStatus(request.cargo_id, "delivered");
 
     res.json({
@@ -247,6 +250,97 @@ exports.getRequestDetail = async (req, res) => {
       return res.status(404).json({ message: "Request not found" });
     }
     res.json(request);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.previewPrice = async (req, res) => {
+  try {
+    const distanceKm = LocationService.calculateDistance(
+      req.body.origin_latitude,
+      req.body.origin_longitude,
+      req.body.destination_latitude,
+      req.body.destination_longitude,
+    );
+
+    const estimatedTime = TimeService.calculateEstimatedTime(distanceKm);
+
+    const cargo = await Cargo.getWeight(req.body.cargo_id);
+    const rule = await Rule.getRates(req.body.rule_id);
+
+    const calculatedPrice = PricingService.calculatePrice(
+      cargo.weight,
+      distanceKm,
+      estimatedTime,
+      rule.weight_rate,
+      rule.distance_rate,
+      rule.time_rate,
+      rule.company_percent,
+    );
+
+    const deliveryDatetime = TimeService.calculateDeliveryDate(
+      req.body.loading_datetime,
+      estimatedTime,
+    );
+
+    res.json({
+      distance_km: distanceKm,
+      estimated_time: estimatedTime,
+      price: calculatedPrice,
+      delivery_datetime: deliveryDatetime,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.updateRequest = async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    const request = await Request.getById(requestId);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+    if (request.status !== "pending") {
+      return res.status(400).json({ message: "Only pending requests can be edited" });
+    }
+
+    const newDeliveryDatetime = TimeService.calculateDeliveryDate(
+      req.body.loading_datetime,
+      request.estimated_time || 0,
+    );
+
+    await Request.updateBasicInfo(requestId, {
+      receiver_name: req.body.receiver_name,
+      receiver_phone: req.body.receiver_phone,
+      loading_datetime: req.body.loading_datetime,
+      delivery_datetime: newDeliveryDatetime,
+    });
+
+    res.json({ message: "Request updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.deleteRequest = async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    const request = await Request.getById(requestId);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+    if (request.status !== "pending") {
+      return res.status(400).json({ message: "Only pending requests can be deleted" });
+    }
+
+    await Request.delete(requestId);
+    await Cargo.delete(request.cargo_id);
+
+    res.json({ message: "Request deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

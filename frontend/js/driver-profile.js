@@ -155,6 +155,136 @@ saveBtn.addEventListener("click", async (e) => {
   }
 });
 
+// ---------------------------------------------------------------
+// Vehicle section
+// ---------------------------------------------------------------
+
+const vehicleEditableFields = [
+  "vehicleType", "plateNumber", "vehicleLength", "vehicleWidth",
+  "vehicleHeight", "vehicleDepreciation",
+];
+
+const vehicleFieldEls = {};
+vehicleEditableFields.forEach((id) => (vehicleFieldEls[id] = document.getElementById(id)));
+const refrigeratorEl = document.getElementById("vehicleRefrigerator");
+
+const editVehicleBtn = document.getElementById("editVehicleBtn");
+const saveVehicleBtn = document.getElementById("saveVehicleBtn");
+const cancelVehicleBtn = document.getElementById("cancelVehicleBtn");
+const vehicleMsg = document.getElementById("vehicleMsg");
+const vehicleForm = document.getElementById("vehicleForm");
+const noVehicleMsg = document.getElementById("noVehicleMsg");
+
+let originalVehicle = null; // full vehicle record as returned by the API
+
+function showVehicleMessage(text, type) {
+  vehicleMsg.textContent = text;
+  vehicleMsg.className = type; // "success" or "error"
+}
+
+// cargo_dimensions is stored as "LxWxH", e.g. "5x2x2.5"
+function parseDimensions(dimensions) {
+  if (!dimensions) return { length: "", width: "", height: "" };
+  const [length, width, height] = dimensions.split("x");
+  return { length: length || "", width: width || "", height: height || "" };
+}
+
+function fillVehicleForm(vehicle) {
+  const { length, width, height } = parseDimensions(vehicle.cargo_dimensions);
+  vehicleFieldEls.vehicleType.value = vehicle.vehicle_type || "truck";
+  vehicleFieldEls.plateNumber.value = vehicle.plate_number || "";
+  vehicleFieldEls.vehicleLength.value = length;
+  vehicleFieldEls.vehicleWidth.value = width;
+  vehicleFieldEls.vehicleHeight.value = height;
+  vehicleFieldEls.vehicleDepreciation.value = vehicle.depreciation ?? "";
+  refrigeratorEl.checked = !!vehicle.refrigerator;
+}
+
+function setVehicleEditing(isEditing) {
+  vehicleEditableFields.forEach((id) => {
+    const el = vehicleFieldEls[id];
+    if (el.tagName === "SELECT") {
+      el.disabled = !isEditing;
+    } else {
+      el.readOnly = !isEditing;
+    }
+  });
+  refrigeratorEl.disabled = !isEditing;
+
+  editVehicleBtn.style.display = isEditing ? "none" : "inline-block";
+  saveVehicleBtn.style.display = isEditing ? "inline-block" : "none";
+  cancelVehicleBtn.style.display = isEditing ? "inline-block" : "none";
+}
+
+// Load vehicle data
+fetch(`${API_BASE}/vehicle/driver/${driverId}`)
+  .then((res) => {
+    if (!res.ok) return null; // driver has no vehicle yet
+    return res.json();
+  })
+  .then((vehicle) => {
+    if (!vehicle) {
+      vehicleForm.style.display = "none";
+      editVehicleBtn.style.display = "none";
+      noVehicleMsg.style.display = "flex";
+      return;
+    }
+    originalVehicle = vehicle;
+    fillVehicleForm(vehicle);
+  })
+  .catch((err) => {
+    console.error(err);
+    showVehicleMessage("Could not load your vehicle.", "error");
+  });
+
+editVehicleBtn.addEventListener("click", () => setVehicleEditing(true));
+
+cancelVehicleBtn.addEventListener("click", () => {
+  fillVehicleForm(originalVehicle);
+  setVehicleEditing(false);
+  vehicleMsg.className = "";
+});
+
+saveVehicleBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  vehicleMsg.className = "";
+
+  const length = vehicleFieldEls.vehicleLength.value || 0;
+  const width = vehicleFieldEls.vehicleWidth.value || 0;
+  const height = vehicleFieldEls.vehicleHeight.value || 0;
+
+  const payload = {
+    driver_id: driverId,
+    cargo_dimensions: `${length}x${width}x${height}`,
+    vehicle_type: vehicleFieldEls.vehicleType.value,
+    refrigerator: refrigeratorEl.checked,
+    depreciation: vehicleFieldEls.vehicleDepreciation.value || 0,
+    plate_number: vehicleFieldEls.plateNumber.value,
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/vehicle/${originalVehicle.vehicle_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.message || "Could not save vehicle changes");
+    }
+
+    const refreshed = await fetch(`${API_BASE}/vehicle/driver/${driverId}`).then((r) => r.json());
+    originalVehicle = refreshed;
+    fillVehicleForm(refreshed);
+    setVehicleEditing(false);
+    showVehicleMessage("Vehicle updated successfully.", "success");
+  } catch (err) {
+    console.error(err);
+    showVehicleMessage(err.message || "Could not save vehicle changes.", "error");
+  }
+});
+
 logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");

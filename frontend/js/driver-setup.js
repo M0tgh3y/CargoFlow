@@ -25,7 +25,7 @@ form.addEventListener("submit", async (e) => {
     phone: document.getElementById("phone").value,
     username: document.getElementById("username").value,
     password: Math.random().toString(36).slice(-10), // driver table requires a password; not collected on this form
-    email: document.getElementById("email").value || accountEmail,
+    email: accountEmail,
     city: document.getElementById("city").value,
     street: document.getElementById("street").value,
     alley: document.getElementById("alley").value,
