@@ -51,16 +51,12 @@ select{
 .rating-status .stars { color:#f1c40f; }
 .card-actions { margin-top: 15px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
 .btn-rate { 
-    background: #3498db; color: white; border: none; padding: 8px 20px; 
+    background: (--primary); color: white; border: none; padding: 8px 20px; 
     border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; 
 }
-.btn-rate:hover { background: #2980b9; transform: translateY(-1px); }
+.btn-rate:hover { background: (--primary); transform: translateY(-1px); }
 .rating-status { color: #64748b; font-size: 14px; font-weight: 500; }
 .stars-display { color: #f1c40f; font-size: 16px; margin-left: 5px; }
 .card-actions { margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e2e8f0; }
-.btn-rate { 
-    background: #3498db; color: white; border: none; padding: 6px 15px; 
-    border-radius: 5px; font-size: 12px; cursor: pointer; 
-}
 .rating-status { font-size: 12px; color: #64748b; font-weight: bold; }
 .stars-display { color: #f1c40f; }
