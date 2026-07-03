@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/driver-dashboard.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/add-vehicle.css">
 </head>
+<!-- driver-dashboard.css is reused here for .add-vehicle-btn and .empty-card styles -->
+
 <body>
 
     <!-- Navbar -->
@@ -169,6 +172,86 @@
                     </div>
 
                 </form>
+
+            </section>
+
+            <!-- Vehicle -->
+            <section class="profile-card card">
+
+                <div class="profile-top">
+
+                    <h1 style="font-size:var(--fs-heading);">My Vehicle</h1>
+
+                    <div class="profile-buttons">
+
+                        <button class="edit-btn" id="editVehicleBtn">Edit Vehicle</button>
+
+                        <button class="cancel-btn" id="cancelVehicleBtn" style="display:none;">Cancel</button>
+                        <button class="save-btn" id="saveVehicleBtn" style="display:none;">Save Changes</button>
+
+                    </div>
+
+                </div>
+
+                <p id="vehicleMsg"></p>
+
+                <form id="vehicleForm">
+
+                    <div class="form-group" style="margin-bottom:18px;">
+                        <label for="vehicleType">Vehicle Type <span>*</span></label>
+                        <select id="vehicleType" name="vehicleType" disabled>
+                            <option value="truck">Truck</option>
+                            <option value="khavar">khavar</option>
+                            <option value="pickup">Pickup</option>
+                            <option value="trailer">Trailer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:18px;">
+                        <label for="plateNumber">Plate Number <span>*</span></label>
+                        <input type="text" id="plateNumber" name="plateNumber" readonly>
+                    </div>
+
+                    <div class="form-row three-column" style="margin-bottom:18px;">
+
+                        <div class="form-group">
+                            <label for="vehicleLength">Length (m)</label>
+                            <input type="number" id="vehicleLength" name="vehicleLength" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicleWidth">Width (m)</label>
+                            <input type="number" id="vehicleWidth" name="vehicleWidth" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicleHeight">Height (m)</label>
+                            <input type="number" id="vehicleHeight" name="vehicleHeight" readonly>
+                        </div>
+
+                    </div>
+
+                    <div class="switch-card" style="margin-bottom:18px;">
+                        <span>Has Refrigerator</span>
+                        <label class="switch">
+                            <input type="checkbox" id="vehicleRefrigerator" disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleDepreciation">Depreciation (%)</label>
+                        <input type="number" id="vehicleDepreciation" name="vehicleDepreciation" readonly>
+                    </div>
+
+                </form>
+
+                <div class="empty-card" id="noVehicleMsg" style="display:none; margin-top:18px;">
+                    <p>You have no vehicle registered yet.</p>
+                    <button class="btn-primary add-vehicle-btn" style="margin-top:12px;">
+                        <a href="add-vehicle.html" style="color:white;">Add Vehicle</a>
+                    </button>
+                </div>
 
             </section>
 

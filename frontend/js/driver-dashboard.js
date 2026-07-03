@@ -50,12 +50,23 @@ if (!driverId) {
     .then(requests => {
         const container = document.getElementById("requestsContainer");
 
+        if (!requests || requests.length === 0) {
+          container.classList.add("empty-card");
+          container.innerHTML = `<p>No trips yet</p>`;
+          return;
+        }
+
+        container.classList.remove("empty-card");
         container.innerHTML = requests.map(r => `
           <div class="request-item">
-              <h3>Request #${r.request_id}</h3>
-              <p>${r.sender_name}</p>
-              <p>${r.status}</p>
+              <div class="request-item-header">
+                <span class="request-id">Request #${r.request_id}</span>
+                <span class="request-status status-${r.status}">${r.status}</span>
+              </div>
+              <p>Sender: ${r.sender_name}</p>
+              <p>To: ${r.receiver_name} (${r.receiver_phone})</p>
           </div>
         `).join("");
-    });
+    })
+    .catch(err => console.error("Could not load trips:", err));
 }
