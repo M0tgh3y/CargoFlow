@@ -87,29 +87,7 @@ class Request {
   return rows;
 }
 
-static async getByDriverId(driverId) {
-  const [rows] = await db.execute(
-    `
-    SELECT
-        r.request_id, r.sender_id, r.driver_id, r.rule_id, r.cargo_id,
-        ST_AsText(r.origin_location) AS origin,
-        ST_AsText(r.destination_location) AS destination,
-        r.distance_km, r.estimated_time, r.loading_datetime, r.delivery_datetime,
-        r.status, r.receiver_name, r.receiver_phone, r.price,
-        c.cargo_type, c.weight, c.refrigerator_required, c.status AS cargo_status,
-        s.full_name AS sender_name, s.phone AS sender_phone
-    FROM request r
-    JOIN cargo c ON c.cargo_id = r.cargo_id
-    JOIN sender s ON s.sender_id = r.sender_id
-    WHERE r.driver_id = ?
-    ORDER BY r.request_id DESC
-    `,
-    [driverId],
-  );
-  return rows;
-}
-
-  static async getDetail(id) {
+  static async getByDriverId(driverId) {
     const [rows] = await db.execute(
       `
       SELECT
@@ -117,20 +95,43 @@ static async getByDriverId(driverId) {
           ST_AsText(r.origin_location) AS origin,
           ST_AsText(r.destination_location) AS destination,
           r.distance_km, r.estimated_time, r.loading_datetime, r.delivery_datetime,
-          r.status, r.delivery_code, r.receiver_name, r.receiver_phone, r.price,
+          r.status, r.receiver_name, r.receiver_phone, r.price,
+          c.cargo_type, c.weight, c.refrigerator_required, c.status AS cargo_status,
+          s.full_name AS sender_name, s.phone AS sender_phone,
+          (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'sender') as sender_rating,
+          (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'driver') as driver_rating
+      FROM request r
+      JOIN cargo c ON c.cargo_id = r.cargo_id
+      JOIN sender s ON s.sender_id = r.sender_id
+      WHERE r.driver_id = ?
+      ORDER BY r.request_id DESC
+      `,
+      [driverId],
+    );
+    return rows;
+  }
+
+
+  static async getDetail(id) {
+    const [rows] = await db.execute(
+      `
+      SELECT
+          r.*, 
+          ST_AsText(r.origin_location) AS origin,
+          ST_AsText(r.destination_location) AS destination,
+          ST_AsText(d.current_location) AS driver_location,
           c.cargo_type, c.weight, c.refrigerator_required, c.status AS cargo_status,
           s.full_name AS sender_name, s.phone AS sender_phone, s.city AS sender_city,
-          d.full_name AS driver_name, d.phone AS driver_phone, d.status AS driver_status,
-          ST_AsText(d.current_location) AS driver_location,
-          v.plate_number, v.vehicle_type
+          d.full_name AS driver_name, d.phone AS driver_phone,
+          (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'sender') as sender_rating_given,
+          (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'driver') as driver_rating_given
       FROM request r
       JOIN cargo c ON c.cargo_id = r.cargo_id
       JOIN sender s ON s.sender_id = r.sender_id
       LEFT JOIN driver d ON d.driver_id = r.driver_id
-      LEFT JOIN vehicle v ON v.driver_id = r.driver_id
       WHERE r.request_id = ?
       `,
-      [id],
+      [id]
     );
     return rows[0];
   }
@@ -146,19 +147,24 @@ static async getByDriverId(driverId) {
   static async getBySenderId(senderId) {
     const [rows] = await db.execute(
       `
-          SELECT request_id, sender_id, driver_id, rule_id, cargo_id,
-                ST_AsText(origin_location) AS origin,
-                ST_AsText(destination_location) AS destination,
-                distance_km, estimated_time, loading_datetime, delivery_datetime,
-                status, receiver_name, receiver_phone, price
-          FROM request
-          WHERE sender_id = ?
-          ORDER BY request_id DESC
-          `,
-      [senderId],
+      SELECT r.request_id, r.sender_id, r.driver_id, r.rule_id, r.cargo_id,
+             ST_AsText(r.origin_location) AS origin,
+             ST_AsText(r.destination_location) AS destination,
+             r.distance_km, r.estimated_time, r.loading_datetime, r.delivery_datetime,
+             r.status, r.receiver_name, r.receiver_phone, r.price,
+             (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'sender') as sender_rating,
+             (SELECT score FROM rating WHERE request_id = r.request_id AND rated_by = 'driver') as driver_rating
+      FROM request r
+      WHERE r.sender_id = ?
+      ORDER BY r.request_id DESC
+      `,
+      [senderId]
     );
     return rows;
   }
+
+
+
   static async create(data) {
     const {
       sender_id,
@@ -283,18 +289,37 @@ static async getByDriverId(driverId) {
     return result;
   }
 
-  static async updateBasicInfo(id, data) {
-    const { receiver_name, receiver_phone, loading_datetime, delivery_datetime } = data;
+  static async updateFull(id, data) {
+    const { 
+      receiver_name, receiver_phone, loading_datetime, delivery_datetime,
+      origin_longitude, origin_latitude, destination_longitude, destination_latitude,
+      distance_km, estimated_time, price
+    } = data;
+    
     const [result] = await db.execute(
       `
         UPDATE request
-        SET receiver_name = ?, receiver_phone = ?, loading_datetime = ?, delivery_datetime = ?
+        SET 
+            receiver_name = ?, 
+            receiver_phone = ?, 
+            loading_datetime = ?, 
+            delivery_datetime = ?,
+            origin_location = ST_GeomFromText(CONCAT('POINT(', ?, ' ', ?, ')'), 4326),
+            destination_location = ST_GeomFromText(CONCAT('POINT(', ?, ' ', ?, ')'), 4326),
+            distance_km = ?,
+            estimated_time = ?,
+            price = ?
         WHERE request_id = ?
         `,
-      [receiver_name, receiver_phone, loading_datetime, delivery_datetime, id],
+      [
+        receiver_name, receiver_phone, loading_datetime, delivery_datetime,
+        origin_longitude, origin_latitude, destination_longitude, destination_latitude,
+        distance_km, estimated_time, price, id
+      ],
     );
     return result;
   }
+
 
   static async delete(id) {
     const [result] = await db.execute(

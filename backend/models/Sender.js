@@ -9,12 +9,17 @@ class Sender {
 
   static async getById(id) {
     const [rows] = await db.execute(
-      "SELECT * FROM sender WHERE sender_id = ?",
-      [id],
-    );
+      `SELECT s.*, 
+             
+        (SELECT AVG(score) FROM rating WHERE rated_user = 'sender' AND sender_id = s.sender_id) as avg_rating
 
+       FROM sender s WHERE s.sender_id = ?`,
+      [id]
+    );
     return rows[0];
   }
+
+
 
   static async getByEmail(email) {
   const [rows] = await db.execute(

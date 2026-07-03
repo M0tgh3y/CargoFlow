@@ -15,17 +15,18 @@ class Driver {
   static async getById(id) {
     const [rows] = await db.execute(
       `
-            SELECT
-                *,
-                ST_AsText(current_location) AS location_text
-            FROM driver
-            WHERE driver_id = ?
+            SELECT d.*, ST_AsText(d.current_location) AS location_text,
+                  
+            (SELECT AVG(score) FROM rating WHERE rated_user = 'driver' AND driver_id = d.driver_id) as avg_rating
+
+            FROM driver d
+            WHERE d.driver_id = ?
         `,
       [id],
     );
-
     return rows[0];
   }
+
 
   static async getByEmail(email) {
   const [rows] = await db.execute(

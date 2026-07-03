@@ -32,7 +32,7 @@ class Rating {
       request_id,
 
       score,
-      comment,
+      comment = null,
 
       rated_by,
       rated_user,

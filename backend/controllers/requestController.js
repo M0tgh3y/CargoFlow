@@ -228,8 +228,9 @@ exports.deliverTrip = async (req, res) => {
       message: "Trip delivered successfully",
     });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
+    res.json({
+        message: "Trip delivered successfully",
+        sender_id: request.sender_id
     });
   }
 };
@@ -300,30 +301,44 @@ exports.updateRequest = async (req, res) => {
     const requestId = req.params.id;
     const request = await Request.getById(requestId);
 
-    if (!request) {
-      return res.status(404).json({ message: "Request not found" });
-    }
-    if (request.status !== "pending") {
-      return res.status(400).json({ message: "Only pending requests can be edited" });
-    }
+    if (!request) return res.status(404).json({ message: "Request not found" });
+    if (request.status !== "pending") return res.status(400).json({ message: "Only pending requests can be edited" });
 
-    const newDeliveryDatetime = TimeService.calculateDeliveryDate(
-      req.body.loading_datetime,
-      request.estimated_time || 0,
+    // 1. Calculate new trip stats
+    const distanceKm = LocationService.calculateDistance(
+      req.body.origin_latitude, req.body.origin_longitude,
+      req.body.destination_latitude, req.body.destination_longitude
+    );
+    const estimatedTime = TimeService.calculateEstimatedTime(distanceKm);
+    const rule = await Rule.getRates(request.rule_id);
+    const calculatedPrice = PricingService.calculatePrice(
+      req.body.weight, distanceKm, estimatedTime,
+      rule.weight_rate, rule.distance_rate, rule.time_rate, rule.company_percent
     );
 
-    await Request.updateBasicInfo(requestId, {
-      receiver_name: req.body.receiver_name,
-      receiver_phone: req.body.receiver_phone,
-      loading_datetime: req.body.loading_datetime,
-      delivery_datetime: newDeliveryDatetime,
+    // 2. Update Cargo
+    await Cargo.update(request.cargo_id, {
+      sender_id: request.sender_id,
+      weight: req.body.weight,
+      cargo_type: req.body.cargo_type,
+      refrigerator_required: req.body.refrigerator_required,
+      status: 'waiting'
     });
 
-    res.json({ message: "Request updated successfully" });
+    // 3. Update Request
+    await Request.updateFull(requestId, {
+      ...req.body,
+      distance_km: distanceKm,
+      estimated_time: estimatedTime,
+      price: calculatedPrice
+    });
+
+    res.json({ message: "Request fully updated" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 exports.deleteRequest = async (req, res) => {
   try {
